@@ -1,0 +1,12 @@
+post_install() {
+    grep -qe '^/usr/bin/fizsh$' /etc/shells ||
+    sed -i "s|^/usr/bin/zsh|/usr/bin/zsh\n/usr/bin/fizsh|" /etc/shells
+}
+
+post_upgrade() {
+    post_install
+}
+
+pre_remove() {
+    sed -i '/^\/usr\/bin\/fizsh/d' /etc/shells
+}
